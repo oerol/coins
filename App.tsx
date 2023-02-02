@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Day from './components/Day';
 import MonthOverview from './components/MonthOverview';
 import Menu from './components/Menu';
+import LatestPurchases from './components/LatestPurchases';
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
       <Day/>
       <MonthOverview/>
       <Menu/>
+      <LatestPurchases/>
     </View>
   );
 }
