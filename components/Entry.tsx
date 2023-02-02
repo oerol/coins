@@ -2,14 +2,7 @@ import { StyleSheet, Text, View, Image } from "react-native";
 import { amountToString } from "../utils";
 import { settings } from "../config";
 
-interface Props {
-  title: string;
-  category: string;
-  amount: number;
-  date: string;
-}
-
-export default function Entry(props: Props) {
+export default function Entry(props: IEntry) {
   const { title, category, amount, date } = props;
   return (
     <View style={styles.entry}>
