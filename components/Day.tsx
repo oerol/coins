@@ -57,7 +57,7 @@ const progressBarHeight = 2;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
+    marginTop: 35,
     alignItems: "center",
   },
   text: {
