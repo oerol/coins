@@ -39,9 +39,10 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
+    fontSize: 12
   },
   moneyText: {
-    fontSize: 22,
+    fontSize: 30,
     fontWeight: "bold",
     color: "white",
   },
