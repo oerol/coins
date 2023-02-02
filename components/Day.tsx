@@ -36,8 +36,12 @@ export default function Day() {
 const progressBarHeight = 2;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    marginTop: 70,
+
+  },
   text: {
+    color: "white",
     fontSize: 20,
     fontWeight: "bold",
   },

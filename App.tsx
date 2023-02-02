@@ -5,7 +5,7 @@ import Day from './components/Day';
 export default function App() {
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
       <Day/>
     </View>
   );
@@ -13,8 +13,8 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 70,
-    backgroundColor: '#fff',
+    flex: 1,
+    backgroundColor: '#283858',
     alignItems: 'center',
   },
 });
