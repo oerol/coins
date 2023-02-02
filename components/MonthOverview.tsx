@@ -9,7 +9,6 @@ export default function MonthOverview() {
 
   const moneySpent = 2140.6;
   const currency = "€";
-  console.log(amountToString(moneySpent));
 
   return (
     <View style={styles.container}>

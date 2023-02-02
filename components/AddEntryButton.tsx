@@ -1,16 +1,17 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import { useKeyboard } from "./Keyboard";
 import { useState } from "react";
+import EntryCreation from "./EntryCreation";
 
-export default function AddEntry() {
-  const [entryCreationMode, setEntryCreationMode] = useState(false);
-  const keyboardHeight = useKeyboard();
+interface Props {
+  setEntryCreationModeParent: (bool: boolean) => void
+}
+export default function AddEntry({setEntryCreationModeParent}: Props) {
 
   const onTouchEnd = (e: any) => {
-    setEntryCreationMode(true);
+    setEntryCreationModeParent(true);
   };
   const onSubmitEditing = (e: any) => {
-    setEntryCreationMode(false);
+    setEntryCreationModeParent(false);
   };
 
   return (
@@ -24,7 +25,6 @@ export default function AddEntry() {
           keyboardType="default"
         />
       </View>
-      {entryCreationMode && <Text style={{ marginTop: -500 }}>hello</Text>}
     </View>
   );
 }
