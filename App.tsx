@@ -4,6 +4,7 @@ import Day from './components/Day';
 import MonthOverview from './components/MonthOverview';
 import Menu from './components/Menu';
 import LatestPurchases from './components/LatestPurchases';
+import AddEntry from './components/AddEntry';
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
       <MonthOverview/>
       <Menu/>
       <LatestPurchases/>
+      <AddEntry/>
     </View>
   );
 }
