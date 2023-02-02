@@ -16,6 +16,24 @@ export default function Day() {
   const getProgress = (progressBarElementWidth: number) => {
     return (currentDay / numberOfDays) * progressBarElementWidth;
   };
+  
+  // https://stackoverflow.com/questions/13627308/add-st-nd-rd-and-th-ordinal-suffix-to-a-number
+  const getOrdinalNumber = (number: number): string => {
+    const j = number % 10
+    const k = number % 100
+
+    if (j == 1 && k != 11) {
+        return number + "st";
+    }
+    if (j == 2 && k != 12) {
+        return number + "nd";
+    }
+    if (j == 3 && k != 13) {
+        return number + "rd";
+    }
+
+    return number + "th";
+  };
 
   const onLayout = (event: LayoutChangeEvent) => {
     let progressBarElementWidth = event.nativeEvent.layout.width;
@@ -26,7 +44,7 @@ export default function Day() {
     <View style={styles.container}>
       <View>
         <Text style={styles.text}>
-          {currentDay}th of {currentMonthString} {currentYear}
+          {getOrdinalNumber(currentDay)} of {currentMonthString} {currentYear}
         </Text>
         <View onLayout={(e) => onLayout(e)} style={styles.progressBar} />
         <View style={[styles.progressBarFilled, { width: progressWidth }]} />
