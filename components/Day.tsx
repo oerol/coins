@@ -24,11 +24,13 @@ export default function Day() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>
-        {currentDay}th of {currentMonthString} {currentYear}
-      </Text>
-      <View onLayout={(e) => onLayout(e)} style={styles.progressBar} />
-      <View style={[styles.progressBarFilled, { width: progressWidth }]} />
+      <View>
+        <Text style={styles.text}>
+          {currentDay}th of {currentMonthString} {currentYear}
+        </Text>
+        <View onLayout={(e) => onLayout(e)} style={styles.progressBar} />
+        <View style={[styles.progressBarFilled, { width: progressWidth }]} />
+      </View>
     </View>
   );
 }
@@ -37,8 +39,8 @@ const progressBarHeight = 2;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 70,
-
+    marginTop: 50,
+    alignItems: "center",
   },
   text: {
     color: "white",
