@@ -1,4 +1,4 @@
-import { Image, Keyboard, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, Keyboard, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { Dimensions } from "react-native";
 import { useKeyboard } from "./Keyboard";
 
@@ -7,13 +7,13 @@ const windowHeight = Dimensions.get("window").height;
 
 const entryCreationHeight = 250;
 
-export default function EntryCreation({setEntryCreationModeParent}: IEntryCreation) {
+export default function EntryCreation({ setEntryCreationModeParent }: IEntryCreation) {
   const keyboardHeight = useKeyboard();
 
   const onCloseButtonPress = (e: any) => {
     setEntryCreationModeParent(false);
     Keyboard.dismiss();
-  }
+  };
 
   return (
     <View style={styles.overlay}>
@@ -27,6 +27,22 @@ export default function EntryCreation({setEntryCreationModeParent}: IEntryCreati
         <TouchableOpacity style={styles.closeButton} onPress={onCloseButtonPress}>
           <Image source={require("../assets/close.png")} resizeMode="contain" />
         </TouchableOpacity>
+        <View style={{ marginTop: 30, flexDirection: "row"}}>
+          <Text style={styles.entryInputText}>I spent</Text>
+          <TextInput
+            style={{ color: "white", fontSize: 20, fontWeight: "bold", marginRight: 5 }}
+            placeholder="0,00€"
+            placeholderTextColor= "white"
+            keyboardType="numeric"
+          />
+          <Text style={styles.entryInputText}>on</Text>
+          <TextInput
+            style={{ color: "white", fontSize: 20, fontWeight: "bold", marginRight: 5 }}
+            placeholder="Shoes"
+            placeholderTextColor= "white"
+            keyboardType="default"
+          />
+        </View>
       </View>
     </View>
   );
@@ -52,6 +68,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   text: {},
-  closeButton: {
+  entryInputText: {
+    color: "white",
+    fontSize: 20,
+    marginRight: 5
   },
+  closeButton: {},
 });
