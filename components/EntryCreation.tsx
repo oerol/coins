@@ -1,7 +1,8 @@
-import { useRef } from "react";
-import { Image, Keyboard, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { useRef, useState } from "react";
+import { Image, Keyboard, NativeSyntheticEvent, StyleSheet, Text, TextInput, TextInputChangeEventData, TouchableOpacity, View } from "react-native";
 import { Dimensions } from "react-native";
 import { useKeyboard } from "./Keyboard";
+import { settings } from "../config";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -13,10 +14,13 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
 
   const secondTextInput = useRef<TextInput>(null);
 
+  const [amountCursorPositon, setAmountCursorPositon] = useState(0)
+
   const onCloseButtonPress = (e: any) => {
     setEntryCreationModeParent(false);
     Keyboard.dismiss();
   };
+
 
   return (
     <View style={styles.overlay}>
@@ -31,19 +35,20 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
           <Image source={require("../assets/close.png")} resizeMode="contain" />
         </TouchableOpacity>
         <View style={{ marginTop: 30, flexDirection: "row"}}>
-          <Text style={styles.entryInputText}>I spent</Text>
+          <Text style={styles.text}>I spent</Text>
           <TextInput
-            style={{ color: "white", fontSize: 20, fontWeight: "bold", marginRight: 5 }}
-            placeholder="0,00€"
+            style={styles.inputText}
+            placeholder="0,00"
             placeholderTextColor= "white"
             keyboardType="numbers-and-punctuation"
             onLayout={(e) => e.target.focus()}
             onSubmitEditing={(e) => secondTextInput.current!.focus()}
           />
-          <Text style={styles.entryInputText}>on:</Text>
+          <Text style={[styles.inputText, {marginRight: 5}]}>{settings.currency}</Text>
+          <Text style={styles.text}>on:</Text>
           <TextInput
             ref={secondTextInput}
-            style={{ color: "white", fontSize: 20, fontWeight: "bold", marginRight: 5 }}
+            style={[styles.inputText, {marginRight: 5}]}
             placeholder=""
             placeholderTextColor= "white"
             keyboardType="default"
@@ -73,8 +78,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
   },
-  text: {},
-  entryInputText: {
+  inputText: { color: "white", fontSize: 20, fontWeight: "bold" },
+  text: {
     color: "white",
     fontSize: 20,
     marginRight: 5
