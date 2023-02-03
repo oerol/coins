@@ -1,11 +1,6 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import { useState } from "react";
-import EntryCreation from "./EntryCreation";
 
-interface Props {
-  setEntryCreationModeParent: (bool: boolean) => void
-}
-export default function AddEntry({setEntryCreationModeParent}: Props) {
+export default function AddEntry({setEntryCreationModeParent}: IEntryCreation) {
 
   const onTouchEnd = (e: any) => {
     setEntryCreationModeParent(true);

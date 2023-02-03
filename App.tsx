@@ -23,7 +23,7 @@ export default function App() {
       <Menu />
       <LatestPurchases />
       <AddEntry setEntryCreationModeParent={setEntryCreationModeParent} />
-      {entryCreationMode && <EntryCreation />}
+      {entryCreationMode && <EntryCreation setEntryCreationModeParent={setEntryCreationModeParent} />}
     </View>
   );
 }
