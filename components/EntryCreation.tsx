@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { Image, Keyboard, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { Dimensions } from "react-native";
 import { useKeyboard } from "./Keyboard";
@@ -9,6 +10,8 @@ const entryCreationHeight = 250;
 
 export default function EntryCreation({ setEntryCreationModeParent }: IEntryCreation) {
   const keyboardHeight = useKeyboard();
+
+  const secondTextInput = useRef<TextInput>(null);
 
   const onCloseButtonPress = (e: any) => {
     setEntryCreationModeParent(false);
@@ -33,12 +36,15 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
             style={{ color: "white", fontSize: 20, fontWeight: "bold", marginRight: 5 }}
             placeholder="0,00€"
             placeholderTextColor= "white"
-            keyboardType="numeric"
+            keyboardType="numbers-and-punctuation"
+            onLayout={(e) => e.target.focus()}
+            onSubmitEditing={(e) => secondTextInput.current!.focus()}
           />
-          <Text style={styles.entryInputText}>on</Text>
+          <Text style={styles.entryInputText}>on:</Text>
           <TextInput
+            ref={secondTextInput}
             style={{ color: "white", fontSize: 20, fontWeight: "bold", marginRight: 5 }}
-            placeholder="Shoes"
+            placeholder=""
             placeholderTextColor= "white"
             keyboardType="default"
           />
