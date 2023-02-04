@@ -3,6 +3,7 @@ import {
   Animated,
   Image,
   Keyboard,
+  KeyboardAvoidingView,
   NativeSyntheticEvent,
   ScrollView,
   StyleSheet,
@@ -73,59 +74,73 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
     opacity: overlayOpacityAnimation.interpolate({
       inputRange: [0, 1],
       outputRange: [0, 1],
-    })
+    }),
   };
 
-
   return (
-    <Animated.ScrollView style={[styles.overlay, opacityStyle]} keyboardShouldPersistTaps="handled" >
-      <Animated.ScrollView style={[styles.container, animatedStyle, { top: 280 }]}>
-        <View style={{ alignItems: "center", marginBottom: 15 }}>
-          <TouchableOpacity onPressIn={(e) => Keyboard.dismiss()} style={{ width: 70, height: 5, backgroundColor: "white", borderRadius: 5 }}></TouchableOpacity>
-        </View>
-        <View
-          style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}
-        >
-          <TouchableOpacity style={styles.button} onPress={onCloseButtonPress}>
-            <Image source={require("../assets/close.png")} resizeMode="contain" />
-          </TouchableOpacity>
-          <DatePickerButton setShowDatePickerParent={setShowDatePickerParent} />
-        </View>
-        <View style={{ marginTop: 20, flexDirection: "row" }}>
-          <Text style={styles.text}>I spent</Text>
-          <TextInput
-            style={styles.inputText}
-            placeholder="0,00"
-            placeholderTextColor="white"
-            keyboardType="numbers-and-punctuation"
-            onLayout={(e) => e.target.focus()}
-            onSubmitEditing={(e) => secondTextInput.current!.focus()}
-          />
-          <Text style={[styles.inputText, { marginRight: 5 }]}>{settings.currency}</Text>
-          <Text style={styles.text}>on:</Text>
-          <TextInput
-            ref={secondTextInput}
-            style={[styles.inputText, { marginRight: 5, width: 150 }]}
-            placeholder=""
-            placeholderTextColor="white"
-            keyboardType="default"
-          />
-        </View>
-        <View style={{ flexDirection: "row", marginTop: 10, justifyContent: "space-between", alignItems: "center" }}>
-          <View style={{ flexDirection: "row" }}>
-            <TouchableOpacity style={styles.entryButton}>
-              <Text style={styles.entryButtonText}>@ Add Category</Text>
+    <Animated.ScrollView style={[styles.overlay, opacityStyle]} keyboardShouldPersistTaps="always">
+      <Animated.ScrollView
+        style={[styles.container, animatedStyle, { top: 280 }]}
+        keyboardShouldPersistTaps="always"
+      >
+        <ScrollView keyboardShouldPersistTaps="always">
+          <View style={{ alignItems: "center", marginBottom: 15 }}>
+            <TouchableOpacity
+              onPressIn={(e) => Keyboard.dismiss()}
+              style={{ width: 70, height: 5, backgroundColor: "white", borderRadius: 5 }}
+            ></TouchableOpacity>
+          </View>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}
+          >
+            <TouchableOpacity style={styles.button} onPress={onCloseButtonPress}>
+              <Image source={require("../assets/close.png")} resizeMode="contain" />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.entryButton}>
-              <Text style={styles.entryButtonText}># Add Tags</Text>
+            <DatePickerButton setShowDatePickerParent={setShowDatePickerParent} />
+          </View>
+          <View style={{ marginTop: 20, flexDirection: "row" }}>
+            <Text style={styles.text}>I spent</Text>
+            <TextInput
+              style={styles.inputText}
+              placeholder="0,00"
+              placeholderTextColor="white"
+              keyboardType="numbers-and-punctuation"
+              onLayout={(e) => e.target.focus()}
+              onSubmitEditing={(e) => secondTextInput.current!.focus()}
+            />
+            <Text style={[styles.inputText, { marginRight: 5 }]}>{settings.currency}</Text>
+            <Text style={styles.text}>on:</Text>
+            <TextInput
+              ref={secondTextInput}
+              style={[styles.inputText, { marginRight: 5, width: 150 }]}
+              placeholder=""
+              placeholderTextColor="white"
+              keyboardType="default"
+            />
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              marginTop: 10,
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <View style={{ flexDirection: "row" }}>
+              <TouchableOpacity style={styles.entryButton}>
+                <Text style={styles.entryButtonText}>@ Add Category</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.entryButton}>
+                <Text style={styles.entryButtonText}># Add Tags</Text>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity style={styles.addEntry}>
+              <Image source={require("../assets/add.png")} resizeMode="contain" />
             </TouchableOpacity>
           </View>
-            <TouchableOpacity style={styles.addEntry}>
-            <Image source={require("../assets/add.png")} resizeMode="contain" />
-            </TouchableOpacity>
-        </View>
 
-        {showDatePicker && <DatePicker />}
+          {showDatePicker && <DatePicker />}
+        </ScrollView>
       </Animated.ScrollView>
     </Animated.ScrollView>
   );
@@ -168,12 +183,12 @@ const styles = StyleSheet.create({
     color: "white",
   },
 
-  button: { 
-    padding: 15, 
-    marginLeft: -15 
-  },
-  addEntry: { 
+  button: {
     padding: 15,
-    marginLeft: -15
-   },
+    marginLeft: -15,
+  },
+  addEntry: {
+    padding: 15,
+    marginLeft: -15,
+  },
 });
