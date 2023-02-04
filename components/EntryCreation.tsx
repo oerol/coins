@@ -45,13 +45,13 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
       <View
         style={[styles.container, { top: 280 }]}
       >
-        <View style={{ alignItems: "center", marginBottom: 30 }}>
+        <View style={{ alignItems: "center", marginBottom: 15 }}>
           <View style={{ width: 70, height: 5, backgroundColor: "white", borderRadius: 5 }}></View>
         </View>
         <View
           style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}
         >
-          <TouchableOpacity style={styles.closeButton} onPress={onCloseButtonPress}>
+          <TouchableOpacity style={styles.button} onPress={onCloseButtonPress}>
             <Image source={require("../assets/close.png")} resizeMode="contain" />
           </TouchableOpacity>
           <DatePickerButton setShowDatePickerParent={setShowDatePickerParent}/>
@@ -107,5 +107,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginRight: 5,
   },
-  closeButton: {},
+  button: {padding: 15, marginLeft: -15},
 });
