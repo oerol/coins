@@ -1,61 +1,84 @@
 import { useRef, useState } from "react";
-import { Image, Keyboard, NativeSyntheticEvent, StyleSheet, Text, TextInput, TextInputChangeEventData, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  Keyboard,
+  NativeSyntheticEvent,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TextInputChangeEventData,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Dimensions } from "react-native";
 import { useKeyboard } from "./Keyboard";
 import { settings } from "../config";
+import DatePicker from "./DatePicker";
+import DatePickerButton from "./DatePickerButton";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-const entryCreationHeight = 250;
+const entryCreationHeight = 200;
 
 export default function EntryCreation({ setEntryCreationModeParent }: IEntryCreation) {
   const keyboardHeight = useKeyboard();
 
   const secondTextInput = useRef<TextInput>(null);
 
-  const [amountCursorPositon, setAmountCursorPositon] = useState(0)
+  const [amountCursorPositon, setAmountCursorPositon] = useState(0);
+
+  const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const setShowDatePickerParent = (bool: boolean) => {
+    setShowDatePicker(bool);
+  };
 
   const onCloseButtonPress = (e: any) => {
     setEntryCreationModeParent(false);
     Keyboard.dismiss();
   };
 
-
   return (
-    <View style={styles.overlay}>
-      <Text style={styles.text}></Text>
+    <ScrollView keyboardShouldPersistTaps="handled" style={styles.overlay}>
       <View
-        style={[styles.container, { top: windowHeight - keyboardHeight - entryCreationHeight }]}
+        style={[styles.container, { top: 280 }]}
       >
         <View style={{ alignItems: "center", marginBottom: 30 }}>
           <View style={{ width: 70, height: 5, backgroundColor: "white", borderRadius: 5 }}></View>
         </View>
-        <TouchableOpacity style={styles.closeButton} onPress={onCloseButtonPress}>
-          <Image source={require("../assets/close.png")} resizeMode="contain" />
-        </TouchableOpacity>
-        <View style={{ marginTop: 30, flexDirection: "row"}}>
+        <View
+          style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}
+        >
+          <TouchableOpacity style={styles.closeButton} onPress={onCloseButtonPress}>
+            <Image source={require("../assets/close.png")} resizeMode="contain" />
+          </TouchableOpacity>
+          <DatePickerButton setShowDatePickerParent={setShowDatePickerParent}/>
+        </View>
+        <View style={{ marginTop: 30, flexDirection: "row" }}>
           <Text style={styles.text}>I spent</Text>
           <TextInput
             style={styles.inputText}
             placeholder="0,00"
-            placeholderTextColor= "white"
+            placeholderTextColor="white"
             keyboardType="numbers-and-punctuation"
             onLayout={(e) => e.target.focus()}
             onSubmitEditing={(e) => secondTextInput.current!.focus()}
           />
-          <Text style={[styles.inputText, {marginRight: 5}]}>{settings.currency}</Text>
+          <Text style={[styles.inputText, { marginRight: 5 }]}>{settings.currency}</Text>
           <Text style={styles.text}>on:</Text>
           <TextInput
             ref={secondTextInput}
-            style={[styles.inputText, {marginRight: 5}]}
+            style={[styles.inputText, { marginRight: 5, width: 150 }]}
             placeholder=""
-            placeholderTextColor= "white"
+            placeholderTextColor="white"
             keyboardType="default"
           />
         </View>
+      {showDatePicker && <DatePicker/>}
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -71,7 +94,7 @@ const styles = StyleSheet.create({
   container: {
     position: "absolute",
     width: windowWidth,
-    height: entryCreationHeight,
+    height: windowHeight - entryCreationHeight,
     backgroundColor: "#281340",
     borderTopStartRadius: 30,
     borderTopEndRadius: 30,
@@ -82,7 +105,7 @@ const styles = StyleSheet.create({
   text: {
     color: "white",
     fontSize: 20,
-    marginRight: 5
+    marginRight: 5,
   },
   closeButton: {},
 });
