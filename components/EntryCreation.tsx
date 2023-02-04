@@ -78,7 +78,7 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
   };
 
   return (
-    <Animated.ScrollView style={[styles.overlay, opacityStyle]} keyboardShouldPersistTaps="always">
+    <Animated.View style={[styles.overlay, opacityStyle]} >
       <Animated.ScrollView
         style={[styles.container, animatedStyle, { top: 280 }]}
         keyboardShouldPersistTaps="always"
@@ -140,7 +140,7 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
 
           {showDatePicker && <DatePicker />}
       </Animated.ScrollView>
-    </Animated.ScrollView>
+    </Animated.View>
   );
 }
 
@@ -150,16 +150,15 @@ const styles = StyleSheet.create({
     width: windowWidth,
     height: windowHeight,
     backgroundColor: "rgba(0, 0, 0, 0.7)",
-    borderTopStartRadius: 30,
-    borderTopEndRadius: 30,
+
   },
   container: {
     position: "absolute",
     width: windowWidth,
     height: windowHeight - entryCreationHeight,
     backgroundColor: "#281340",
-    borderTopStartRadius: 30,
-    borderTopEndRadius: 30,
+    borderTopStartRadius: 20,
+    borderTopEndRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 20,
   },
