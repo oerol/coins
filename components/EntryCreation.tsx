@@ -1,5 +1,6 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
+  Animated,
   Image,
   Keyboard,
   NativeSyntheticEvent,
@@ -40,9 +41,45 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
     Keyboard.dismiss();
   };
 
+  const [animation] = useState(new Animated.Value(0));
+  const [overlayOpacityAnimation] = useState(new Animated.Value(0));
+
+  useEffect(() => {
+    Animated.timing(animation, {
+      toValue: 1,
+      duration: 250,
+      useNativeDriver: true,
+    }).start();
+
+    Animated.timing(overlayOpacityAnimation, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  }, []);
+
+  const animatedStyle = {
+    transform: [
+      {
+        translateY: animation.interpolate({
+          inputRange: [0, 1],
+          outputRange: [200, 0],
+        }),
+      },
+    ],
+  };
+
+  const opacityStyle = {
+    opacity: overlayOpacityAnimation.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, 1],
+    })
+  };
+
+
   return (
-    <ScrollView keyboardShouldPersistTaps="handled" style={styles.overlay}>
-      <View style={[styles.container, { top: 280 }]}>
+    <Animated.ScrollView style={[styles.overlay, opacityStyle]} keyboardShouldPersistTaps="handled" >
+      <Animated.ScrollView style={[styles.container, animatedStyle, { top: 280 }]}>
         <View style={{ alignItems: "center", marginBottom: 15 }}>
           <TouchableOpacity onPressIn={(e) => Keyboard.dismiss()} style={{ width: 70, height: 5, backgroundColor: "white", borderRadius: 5 }}></TouchableOpacity>
         </View>
@@ -89,8 +126,8 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
         </View>
 
         {showDatePicker && <DatePicker />}
-      </View>
-    </ScrollView>
+      </Animated.ScrollView>
+    </Animated.ScrollView>
   );
 }
 
