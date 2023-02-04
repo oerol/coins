@@ -17,8 +17,9 @@ export default function DatePicker() {
       testID="dateTimePicker"
       value={date}
       onChange={onChange}
-      display="spinner"
+      display="inline"
       key={3}
+      accentColor="#C898F8"
     />
   );
 }
