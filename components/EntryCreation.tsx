@@ -44,7 +44,7 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
     <ScrollView keyboardShouldPersistTaps="handled" style={styles.overlay}>
       <View style={[styles.container, { top: 280 }]}>
         <View style={{ alignItems: "center", marginBottom: 15 }}>
-          <View style={{ width: 70, height: 5, backgroundColor: "white", borderRadius: 5 }}></View>
+          <TouchableOpacity onPressIn={(e) => Keyboard.dismiss()} style={{ width: 70, height: 5, backgroundColor: "white", borderRadius: 5 }}></TouchableOpacity>
         </View>
         <View
           style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}
