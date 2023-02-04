@@ -42,9 +42,7 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
 
   return (
     <ScrollView keyboardShouldPersistTaps="handled" style={styles.overlay}>
-      <View
-        style={[styles.container, { top: 280 }]}
-      >
+      <View style={[styles.container, { top: 280 }]}>
         <View style={{ alignItems: "center", marginBottom: 15 }}>
           <View style={{ width: 70, height: 5, backgroundColor: "white", borderRadius: 5 }}></View>
         </View>
@@ -54,9 +52,9 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
           <TouchableOpacity style={styles.button} onPress={onCloseButtonPress}>
             <Image source={require("../assets/close.png")} resizeMode="contain" />
           </TouchableOpacity>
-          <DatePickerButton setShowDatePickerParent={setShowDatePickerParent}/>
+          <DatePickerButton setShowDatePickerParent={setShowDatePickerParent} />
         </View>
-        <View style={{ marginTop: 30, flexDirection: "row" }}>
+        <View style={{ marginTop: 20, flexDirection: "row" }}>
           <Text style={styles.text}>I spent</Text>
           <TextInput
             style={styles.inputText}
@@ -76,7 +74,21 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
             keyboardType="default"
           />
         </View>
-      {showDatePicker && <DatePicker/>}
+        <View style={{ flexDirection: "row", marginTop: 10, justifyContent: "space-between", alignItems: "center" }}>
+          <View style={{ flexDirection: "row" }}>
+            <TouchableOpacity style={styles.entryButton}>
+              <Text style={styles.entryButtonText}>@ Add Category</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.entryButton}>
+              <Text style={styles.entryButtonText}># Add Tags</Text>
+            </TouchableOpacity>
+          </View>
+            <TouchableOpacity style={styles.addEntry}>
+            <Image source={require("../assets/add.png")} resizeMode="contain" />
+            </TouchableOpacity>
+        </View>
+
+        {showDatePicker && <DatePicker />}
       </View>
     </ScrollView>
   );
@@ -107,5 +119,24 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginRight: 5,
   },
-  button: {padding: 15, marginLeft: -15},
+  entryButton: {
+    borderColor: "white",
+    borderWidth: 1,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+  entryButtonText: {
+    color: "white",
+  },
+
+  button: { 
+    padding: 15, 
+    marginLeft: -15 
+  },
+  addEntry: { 
+    padding: 15,
+    marginLeft: -15
+   },
 });
