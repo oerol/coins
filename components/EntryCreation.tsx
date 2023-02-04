@@ -83,7 +83,6 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
         style={[styles.container, animatedStyle, { top: 280 }]}
         keyboardShouldPersistTaps="always"
       >
-        <ScrollView keyboardShouldPersistTaps="always">
           <View style={{ alignItems: "center", marginBottom: 15 }}>
             <TouchableOpacity
               onPressIn={(e) => Keyboard.dismiss()}
@@ -140,7 +139,6 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
           </View>
 
           {showDatePicker && <DatePicker />}
-        </ScrollView>
       </Animated.ScrollView>
     </Animated.ScrollView>
   );
