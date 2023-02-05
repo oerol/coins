@@ -13,7 +13,8 @@ export default function Entry(props: IEntry) {
         <Text style={[styles.text, styles.entryInfoTitle]}>{title}</Text>
         <Text style={[styles.text, styles.entryInfoCategory]}>{category}</Text>
       </View>
-      <View style={{ marginLeft: "auto" }}>
+      <View style={{flexGrow: 1}}></View>
+      <View style={{  }}>
         <Text style={[styles.text, styles.entryInfoAmount]}>
           {amountToString(amount)}
           {settings.currency}
@@ -33,7 +34,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 5
+    justifyContent: "space-between",
+    marginBottom: 5,
+
   },
   entryImage: {
     backgroundColor: "#FAFFC3",
@@ -56,6 +59,7 @@ const styles = StyleSheet.create({
   entryInfoDate: {
     color: "#C8C8C8",
     fontSize: 10,
+    width: 60
   },
   text: {
     color: "white",
