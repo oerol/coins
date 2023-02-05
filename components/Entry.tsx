@@ -1,20 +1,38 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import { amountToString } from "../utils";
 import { settings } from "../config";
+const emojiData = require("../assets/emoji.json");
+
 
 export default function Entry(props: IEntry) {
   const { title, category, amount, date } = props;
+
+  const searchByTag = (tag: string) => {
+    tag = tag.toLowerCase();
+    for (const emoji of emojiData) {
+      if (emoji.custom_tag) {
+        if (emoji.custom_tag.includes(tag)) {
+          return emoji.emoji;
+        }
+      }
+    }
+    return null;
+  };
+
+  const emoji = searchByTag(category);
+  console.log(emoji);
+
   return (
     <View style={styles.entry}>
       <View style={styles.entryImage}>
-        <Image source={require("../assets/shoes.png")} resizeMode="contain" />
+        <Text style={{ fontSize: 25 }}>{emoji}</Text>
       </View>
       <View style={styles.entryInfo}>
         <Text style={[styles.text, styles.entryInfoTitle]}>{title}</Text>
         <Text style={[styles.text, styles.entryInfoCategory]}>{category}</Text>
       </View>
-      <View style={{flexGrow: 1}}></View>
-      <View style={{  }}>
+      <View style={{ flexGrow: 1 }}></View>
+      <View style={{}}>
         <Text style={[styles.text, styles.entryInfoAmount]}>
           {amountToString(amount)}
           {settings.currency}
@@ -36,7 +54,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     marginBottom: 5,
-
   },
   entryImage: {
     backgroundColor: "#FAFFC3",
@@ -59,7 +76,7 @@ const styles = StyleSheet.create({
   entryInfoDate: {
     color: "#C8C8C8",
     fontSize: 10,
-    width: 60
+    width: 60,
   },
   text: {
     color: "white",
