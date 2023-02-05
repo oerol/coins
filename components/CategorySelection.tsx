@@ -26,9 +26,9 @@ export default function CategorySelection({ setShowCategorySelectionParent }: IC
       <TouchableOpacity style={styles.createCategoryButton}>
         <Text style={styles.text}>+ Create Category</Text>
       </TouchableOpacity>
-      {CATEGORIES.map((category) => {
+      {CATEGORIES.map((category, i) => {
         return (
-          <TouchableOpacity style={styles.item} onPress={(e) => onCategorySelection(e)}>
+          <TouchableOpacity style={styles.item} onPress={(e) => onCategorySelection(e)} key={i}>
             <Text style={styles.text}>{category.title}</Text>
           </TouchableOpacity>
         );
