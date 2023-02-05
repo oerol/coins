@@ -37,6 +37,10 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
 
   const [showCategorySelection, setShowCategorySelection] = useState(false);
 
+  const setShowCategorySelectionParent = (bool: boolean) => {
+    setShowCategorySelection(bool);
+  }
+
   const setShowDatePickerParent = (bool: boolean) => {
     setShowDatePicker(bool);
   };
@@ -100,7 +104,7 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
             <DatePickerButton setShowDatePickerParent={setShowDatePickerParent} />
           </View>
           <View style={{ marginTop: 20, flexDirection: "row" }}>
-            {showCategorySelection && <CategorySelection />}
+            {showCategorySelection && <CategorySelection setShowCategorySelectionParent={setShowCategorySelectionParent}/>}
 
             <Text style={styles.text}>I spent</Text>
             <TextInput
