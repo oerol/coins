@@ -7,7 +7,7 @@ import { settings } from "../config";
 
 export default function MonthOverview() {
 
-  const moneySpent = 2140.6;
+  const moneySpent = 340.6;
   const currency = "€";
 
   return (

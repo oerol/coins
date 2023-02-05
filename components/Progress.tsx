@@ -5,7 +5,7 @@ export default function Progress() {
     const progressToString = (progress: number): string => {
         return progress.toString().replace(".", ",") + "%"
     }
-    const progress = 3.14;
+    const progress = 6.14;
   return (
     <View style={styles.container}>
       <Svg width={8} height={10}>
