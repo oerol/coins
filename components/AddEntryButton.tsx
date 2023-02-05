@@ -26,7 +26,7 @@ export default function AddEntry({setEntryCreationModeParent}: IEntryCreation) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 200,
+    marginTop: 40, // TODO
   },
   buttonContainer: {
     paddingVertical: 10,
