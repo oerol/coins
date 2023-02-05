@@ -1,38 +1,38 @@
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 
 interface ICategorySelection {
   setShowCategorySelectionParent: (bool: boolean) => void;
 }
 
-export default function CategorySelection({setShowCategorySelectionParent}: ICategorySelection) {
+interface ICategory {
+  title: string;
+  color: string;
+}
+
+export default function CategorySelection({ setShowCategorySelectionParent }: ICategorySelection) {
   const onCategorySelection = (e: any) => {
-    setShowCategorySelectionParent(false)
-  }
+    setShowCategorySelectionParent(false);
+  };
+
+  const CATEGORIES: ICategory[] = [
+    { title: "Clothing", color: "red" },
+    { title: "Apps", color: "blue" },
+    { title: "Gifts", color: "green" },
+    { title: "Books", color: "orange" },
+  ];
+
   return (
     <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
       <TouchableOpacity style={styles.createCategoryButton}>
         <Text style={styles.text}>+ Create Category</Text>
       </TouchableOpacity>
-      <TouchableOpacity>
-        <TouchableOpacity style={styles.item} onPress={(e) => onCategorySelection(e)}>
-          <Text style={styles.text}>Clothing</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.item} onPress={(e) => onCategorySelection(e)}>
-          <Text style={styles.text}>Apps</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.item} onPress={(e) => onCategorySelection(e)}>
-          <Text style={styles.text}>Gifts</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.item} onPress={(e) => onCategorySelection(e)}>
-          <Text style={styles.text}>Gifts</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.item} onPress={(e) => onCategorySelection(e)}>
-          <Text style={styles.text}>Gifts</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.item} onPress={(e) => onCategorySelection(e)}>
-          <Text style={styles.text}>Gifts</Text>
-        </TouchableOpacity>
-      </TouchableOpacity>
+      {CATEGORIES.map((category) => {
+        return (
+          <TouchableOpacity style={styles.item} onPress={(e) => onCategorySelection(e)}>
+            <Text style={styles.text}>{category.title}</Text>
+          </TouchableOpacity>
+        );
+      })}
     </ScrollView>
   );
 }
