@@ -5,8 +5,8 @@ export default function LatestPurchases() {
 
   const latestEntries: IEntry[]= [
     {title:"Nike Shoes", category:"Clothing", amount: 100, date:"2 days ago"},
-    {title:"Adidas Shoes", category:"Clothing", amount: 100.5, date:"3 days ago"},
-    {title:"Atomic Habits", category:"Books", amount: 30, date:"4 days ago"},
+    {title:"Atomic Habits", category:"Books", amount: 30, date:"3 days ago"},
+    {title:"Levis Jeans", category:"Clothing", amount: 75.50 , date:"4 days ago"},
     {title:"Barber", category:"Lifestyle", amount: 20, date:"1 week ago"},
     {title:"Restaurant", category:"Food", amount: 30, date:"1 weeks ago"},
     {title:"Vacation Italy", category:"Lifestyle", amount: 800, date:"2 weeks ago"},
