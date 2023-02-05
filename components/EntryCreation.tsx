@@ -11,6 +11,7 @@ import {
   TextInput,
   TextInputChangeEventData,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from "react-native";
 import { Dimensions } from "react-native";
@@ -18,6 +19,7 @@ import { useKeyboard } from "./Keyboard";
 import { settings } from "../config";
 import DatePicker from "./DatePicker";
 import DatePickerButton from "./DatePickerButton";
+import CategorySelection from "./CategorySelection";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -32,6 +34,8 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
   const [amountCursorPositon, setAmountCursorPositon] = useState(0);
 
   const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const [showCategorySelection, setShowCategorySelection] = useState(false);
 
   const setShowDatePickerParent = (bool: boolean) => {
     setShowDatePicker(bool);
@@ -78,11 +82,9 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
   };
 
   return (
-    <Animated.View style={[styles.overlay, opacityStyle]} >
-      <Animated.ScrollView
-        style={[styles.container, animatedStyle, { top: 280 }]}
-        keyboardShouldPersistTaps="always"
-      >
+    <TouchableWithoutFeedback >
+      <Animated.View style={[styles.overlay, opacityStyle]}>
+        <Animated.View style={[styles.container, animatedStyle, { top: 280 }]}>
           <View style={{ alignItems: "center", marginBottom: 15 }}>
             <TouchableOpacity
               onPressIn={(e) => Keyboard.dismiss()}
@@ -98,6 +100,8 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
             <DatePickerButton setShowDatePickerParent={setShowDatePickerParent} />
           </View>
           <View style={{ marginTop: 20, flexDirection: "row" }}>
+            {showCategorySelection && <CategorySelection />}
+
             <Text style={styles.text}>I spent</Text>
             <TextInput
               style={styles.inputText}
@@ -126,7 +130,10 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
             }}
           >
             <View style={{ flexDirection: "row" }}>
-              <TouchableOpacity style={styles.entryButton}>
+              <TouchableOpacity
+                style={styles.entryButton}
+                onPress={(e) => setShowCategorySelection(true)}
+              >
                 <Text style={styles.entryButtonText}>@ Add Category</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.entryButton}>
@@ -139,8 +146,9 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
           </View>
 
           {showDatePicker && <DatePicker />}
-      </Animated.ScrollView>
-    </Animated.View>
+        </Animated.View>
+      </Animated.View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -150,10 +158,9 @@ const styles = StyleSheet.create({
     width: windowWidth,
     height: windowHeight,
     backgroundColor: "rgba(0, 0, 0, 0.7)",
-
   },
   container: {
-    position: "absolute",
+    overflow: "visible",
     width: windowWidth,
     height: windowHeight - entryCreationHeight,
     backgroundColor: "#281340",
