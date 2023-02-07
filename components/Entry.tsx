@@ -20,7 +20,6 @@ export default function Entry(props: IEntry) {
   };
 
   const emoji = searchByTag(category);
-  console.log(emoji);
 
   return (
     <View style={styles.entry}>

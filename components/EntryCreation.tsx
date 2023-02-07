@@ -20,6 +20,7 @@ import { settings } from "../config";
 import DatePicker from "./DatePicker";
 import DatePickerButton from "./DatePickerButton";
 import CategorySelection from "./CategorySelection";
+import { saveObject } from "../services/Storage";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -29,13 +30,13 @@ const entryCreationHeight = 200;
 export default function EntryCreation({ setEntryCreationModeParent }: IEntryCreation) {
   const keyboardHeight = useKeyboard();
 
-  const secondTextInput = useRef<TextInput>(null);
-
   const [amountCursorPositon, setAmountCursorPositon] = useState(0);
 
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const [showCategorySelection, setShowCategorySelection] = useState(false);
+
+  const titleInputRef = useRef<TextInput>(null);
 
   const setShowCategorySelectionParent = (bool: boolean) => {
     setShowCategorySelection(bool);
@@ -85,6 +86,15 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
     }),
   };
 
+  const [amount, setAmount] = useState("");
+  const [title, setTitle] = useState("");
+
+  const onAdd = (e: any) => {
+    let parsedAmount = parseInt(amount)
+    const newEntry: IEntry = {amount: parsedAmount,title, category: "", date: "" }
+    saveObject(newEntry, "entry")
+  } 
+
   return (
     <TouchableWithoutFeedback >
       <Animated.View style={[styles.overlay, opacityStyle]}>
@@ -108,17 +118,19 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
 
             <Text style={styles.text}>I spent</Text>
             <TextInput
+              onChangeText={(newValue) => setAmount(newValue)}
               style={styles.inputText}
               placeholder="0,00"
               placeholderTextColor="white"
               keyboardType="numbers-and-punctuation"
               onLayout={(e) => e.target.focus()}
-              onSubmitEditing={(e) => secondTextInput.current!.focus()}
+              onSubmitEditing={(e) => titleInputRef.current!.focus()}
             />
             <Text style={[styles.inputText, { marginRight: 5 }]}>{settings.currency}</Text>
             <Text style={styles.text}>on:</Text>
             <TextInput
-              ref={secondTextInput}
+              ref={titleInputRef}
+              onChangeText={(newValue) => setTitle(newValue)}
               style={[styles.inputText, { marginRight: 5, width: 150 }]}
               placeholder=""
               placeholderTextColor="white"
@@ -144,7 +156,7 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
                 <Text style={styles.entryButtonText}># Add Tags</Text>
               </TouchableOpacity>
             </View>
-            <TouchableOpacity style={styles.addEntry}>
+            <TouchableOpacity style={styles.addEntry} onPress={(e) => onAdd(e)}>
               <Image source={require("../assets/add.png")} resizeMode="contain" />
             </TouchableOpacity>
           </View>
