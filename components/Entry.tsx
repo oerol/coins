@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image } from "react-native";
-import { amountToString } from "../utils";
+import { amountToString, dateStringToTimeAdverbial } from "../utils";
 import { settings } from "../config";
 const emojiData = require("../assets/emoji.json");
 
@@ -36,7 +36,7 @@ export default function Entry(props: IEntry) {
           {amountToString(amount)}
           {settings.currency}
         </Text>
-        <Text style={[styles.text, styles.entryInfoDate]}>{date}</Text>
+        <Text style={[styles.text, styles.entryInfoDate]}>{dateStringToTimeAdverbial(date)}</Text>
       </View>
     </View>
   );
