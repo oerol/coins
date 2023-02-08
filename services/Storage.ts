@@ -23,9 +23,18 @@ export const saveEntry = async (newEntry: any) => {
 
 export const getEntries = async () => {
   try {
-    return await getObject("entries");
+    return await (getObject("entries"));
   } catch (e) {
     console.log("Couldn't read from storage", e);
+  }
+};
+
+export const removeEntries = async () => {
+  try {
+    const jsonData = JSON.stringify([]);
+    AsyncStorage.setItem("@entries", jsonData);
+  } catch (e) {
+    console.log("Couldn't remove from storage", e);
   }
 };
 
