@@ -81,10 +81,21 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
     Keyboard.dismiss();
   };
 
+  const inputIsValid = (): boolean => {
+    if (amount == "") return false;
+    if (title == "") return false;
+
+    return true;
+  }
+
   const onAdd = (e: any) => {
-    let parsedAmount = parseInt(amount);
-    const newEntry: IEntry = { amount: parsedAmount, title, category: "", date: "" };
-    saveEntry(newEntry);
+    if (inputIsValid()) {
+      let parsedAmount = parseInt(amount);
+      const newEntry: IEntry = { amount: parsedAmount, title, category: "", date: "" };
+      saveEntry(newEntry);
+    } else {
+      console.log("Check the input!")
+    }
   };
 
   return (
