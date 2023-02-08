@@ -3,13 +3,9 @@ import {
   Animated,
   Image,
   Keyboard,
-  KeyboardAvoidingView,
-  NativeSyntheticEvent,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
-  TextInputChangeEventData,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
@@ -30,26 +26,12 @@ const entryCreationHeight = 200;
 export default function EntryCreation({ setEntryCreationModeParent }: IEntryCreation) {
   const keyboardHeight = useKeyboard();
 
-  const [amountCursorPositon, setAmountCursorPositon] = useState(0);
-
+  const [amount, setAmount] = useState("");
+  const [title, setTitle] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
-
   const [showCategorySelection, setShowCategorySelection] = useState(false);
 
   const titleInputRef = useRef<TextInput>(null);
-
-  const setShowCategorySelectionParent = (bool: boolean) => {
-    setShowCategorySelection(bool);
-  }
-
-  const setShowDatePickerParent = (bool: boolean) => {
-    setShowDatePicker(bool);
-  };
-
-  const onCloseButtonPress = (e: any) => {
-    setEntryCreationModeParent(false);
-    Keyboard.dismiss();
-  };
 
   const [animation] = useState(new Animated.Value(0));
   const [overlayOpacityAnimation] = useState(new Animated.Value(0));
@@ -86,17 +68,27 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
     }),
   };
 
-  const [amount, setAmount] = useState("");
-  const [title, setTitle] = useState("");
+  const setShowCategorySelectionParent = (bool: boolean) => {
+    setShowCategorySelection(bool);
+  };
+
+  const setShowDatePickerParent = (bool: boolean) => {
+    setShowDatePicker(bool);
+  };
+
+  const onCloseButtonPress = (e: any) => {
+    setEntryCreationModeParent(false);
+    Keyboard.dismiss();
+  };
 
   const onAdd = (e: any) => {
-    let parsedAmount = parseInt(amount)
-    const newEntry: IEntry = {amount: parsedAmount,title, category: "", date: "" }
-    saveEntry(newEntry)
-  } 
+    let parsedAmount = parseInt(amount);
+    const newEntry: IEntry = { amount: parsedAmount, title, category: "", date: "" };
+    saveEntry(newEntry);
+  };
 
   return (
-    <TouchableWithoutFeedback >
+    <TouchableWithoutFeedback>
       <Animated.View style={[styles.overlay, opacityStyle]}>
         <Animated.View style={[styles.container, animatedStyle, { top: 280 }]}>
           <View style={{ alignItems: "center", marginBottom: 15 }}>
@@ -114,7 +106,9 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
             <DatePickerButton setShowDatePickerParent={setShowDatePickerParent} />
           </View>
           <View style={{ marginTop: 20, flexDirection: "row" }}>
-            {showCategorySelection && <CategorySelection setShowCategorySelectionParent={setShowCategorySelectionParent}/>}
+            {showCategorySelection && (
+              <CategorySelection setShowCategorySelectionParent={setShowCategorySelectionParent} />
+            )}
 
             <Text style={styles.text}>I spent</Text>
             <TextInput
