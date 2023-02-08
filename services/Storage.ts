@@ -9,13 +9,31 @@ export const saveObject = async (object: any, key: string) => {
   }
 };
 
-export const getObject = async (key: string) => {
+export const saveEntry = async (newEntry: any) => {
   try {
-    const jsonValue = await AsyncStorage.getItem("@" + key);
-    return JSON.parse((jsonValue) as string);
+    let entries = await getEntries();
+    entries.push(newEntry);
+
+    const jsonData = JSON.stringify(entries);
+    await AsyncStorage.setItem("@entries", jsonData);
+  } catch (e) {
+    console.log("Couldn't write to storage", e);
+  }
+};
+
+export const getEntries = async () => {
+  try {
+    return await getObject("entries");
   } catch (e) {
     console.log("Couldn't read from storage", e);
   }
 };
 
-
+export const getObject = async (key: string) => {
+  try {
+    const jsonValue = await AsyncStorage.getItem("@" + key);
+    return JSON.parse(jsonValue as string);
+  } catch (e) {
+    console.log("Couldn't read from storage", e);
+  }
+};

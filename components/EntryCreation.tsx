@@ -20,7 +20,7 @@ import { settings } from "../config";
 import DatePicker from "./DatePicker";
 import DatePickerButton from "./DatePickerButton";
 import CategorySelection from "./CategorySelection";
-import { saveObject } from "../services/Storage";
+import { saveEntry, saveObject } from "../services/Storage";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -92,7 +92,7 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
   const onAdd = (e: any) => {
     let parsedAmount = parseInt(amount)
     const newEntry: IEntry = {amount: parsedAmount,title, category: "", date: "" }
-    saveObject(newEntry, "entry")
+    saveEntry(newEntry)
   } 
 
   return (
