@@ -29,6 +29,16 @@ export const getEntries = async () => {
   }
 };
 
+export const getLastEntries = async (numberOfEntries: number) => {
+  try {
+    let entries = await getObject("entries");
+    let latestEntries = entries.reverse().slice(0, numberOfEntries);
+    return latestEntries;
+  } catch (e) {
+    console.log("Couldn't read from storage", e);
+  }
+};
+
 export const removeEntries = async () => {
   try {
     const jsonData = JSON.stringify([]);

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
-import { getEntries, removeEntries } from "../services/Storage";
+import { getLastEntries } from "../services/Storage";
 import Entry from "./Entry";
 import {useEffect,useState} from "react"
 
@@ -17,7 +17,7 @@ export default function LatestPurchases() {
   const [latestEntries, setLatestEntries] = useState<IEntry[]>([ ])
 
   useEffect(() => {
-    getEntries().then((entries: IEntry[]) => setLatestEntries(entries));
+    getLastEntries(6).then((entries: IEntry[]) => setLatestEntries(entries));
   }, [])
 
   return (
