@@ -29,6 +29,8 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
 
   const [amount, setAmount] = useState("");
   const [title, setTitle] = useState("");
+  const [date, setDate] = useState(new Date());
+
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showCategorySelection, setShowCategorySelection] = useState(false);
 
@@ -77,6 +79,10 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
     setShowDatePicker(bool);
   };
 
+  const setDateParent = (selectedDate: any) => {
+    setDate(selectedDate);
+  };
+
   const onCloseButtonPress = (e: any) => {
     setEntryCreationModeParent(false);
     Keyboard.dismiss();
@@ -103,7 +109,7 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
   const onAdd = (e: any) => {
     if (inputIsValid()) {
       let parsedAmount = parseInt(amount);
-      const newEntry: IEntry = { amount: parsedAmount, title, category: "", date: "" };
+      const newEntry: IEntry = { amount: parsedAmount, title, category: "", date: date.toISOString() };
       saveEntry(newEntry);
     } else {
       console.log("Check the input!");
@@ -178,7 +184,7 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
             </TouchableOpacity>
           </View>
 
-          {showDatePicker && <DatePicker />}
+          {showDatePicker && <DatePicker date={date} setDateParent={setDateParent}/>}
         </Animated.View>
       </Animated.View>
     </TouchableWithoutFeedback>
