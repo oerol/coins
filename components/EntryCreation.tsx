@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import {
+  Alert,
   Animated,
   Image,
   Keyboard,
@@ -82,11 +83,22 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
   };
 
   const inputIsValid = (): boolean => {
-    if (amount == "") return false;
-    if (title == "") return false;
+    if (amount == "") {
+      Alert.alert("Please specify how much you spent", "", [
+        { text: "OK", onPress: () => console.log("OK Pressed") },
+      ]);
+      return false;
+    }
+
+    if (title == "") {
+      Alert.alert("Please specify a title for your purchase", "", [
+        { text: "OK", onPress: () => console.log("OK Pressed") },
+      ]);
+      return false;
+    }
 
     return true;
-  }
+  };
 
   const onAdd = (e: any) => {
     if (inputIsValid()) {
@@ -94,7 +106,7 @@ export default function EntryCreation({ setEntryCreationModeParent }: IEntryCrea
       const newEntry: IEntry = { amount: parsedAmount, title, category: "", date: "" };
       saveEntry(newEntry);
     } else {
-      console.log("Check the input!")
+      console.log("Check the input!");
     }
   };
 
