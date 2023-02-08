@@ -24,7 +24,11 @@ const windowHeight = Dimensions.get("window").height;
 
 const entryCreationHeight = 200;
 
-export default function EntryCreation({ setEntryCreationModeParent }: IEntryCreation) {
+interface EntryCreationProps {
+  setEntryCreationModeParent: (bool: boolean) => void
+}
+
+export default function EntryCreation({ setEntryCreationModeParent }: EntryCreationProps) {
   const keyboardHeight = useKeyboard();
 
   const [amount, setAmount] = useState("");

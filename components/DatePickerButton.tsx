@@ -1,6 +1,10 @@
 import { Keyboard, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-export default function DatePickerButton({ setShowDatePickerParent }: IDatePickerButton) {
+interface DatePickerButtonProps {
+  setShowDatePickerParent: (bool: boolean) => void
+}
+
+export default function DatePickerButton({ setShowDatePickerParent }: DatePickerButtonProps) {
   const onPress = (e: any) => {
       Keyboard.dismiss()
     setShowDatePickerParent(true);
