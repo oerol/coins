@@ -7,16 +7,16 @@ interface LatestPurchasesProps {
 
 export default function LatestPurchases({entries}: LatestPurchasesProps) {
 
-/*   const latestEntries: IEntry[]= [
+/*   
+const latestEntries: IEntry[]= [
     {title:"Nike Shoes", category:"Shoes", amount: 100, date:"today"},
     {title:"Atomic Habits", category:"Books", amount: 30, date:"yesterday"},
     {title:"Jeans", category:"Shoes", amount: 55.50 , date:"1 day ago"},
     {title:"Barber", category:"Lifestyle", amount: 20, date:"1 day ago"},
     {title:"Restaurant", category:"Food", amount: 30, date:"2 days ago"},
     {title:"Cinema", category:"Lifestyle", amount: 10, date:"3 days ago"},
-  ] */
-
-
+  ] 
+*/
 
   return (
     <View style={styles.container}>
