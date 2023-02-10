@@ -29,7 +29,7 @@ export function dateStringToTimeAdverbial(dateString: string): string {
   } else if (differenceInDays === 1) {
     return 'yesterday';
   } else if (differenceInDays >= 2 && differenceInDays <= 7) {
-    return differenceInDays + "days ago";
+    return differenceInDays + " days ago";
   } else {
     return '> 1 week';
   }
