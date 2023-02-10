@@ -25,10 +25,11 @@ const windowHeight = Dimensions.get("window").height;
 const entryCreationHeight = 200;
 
 interface EntryCreationProps {
-  setEntryCreationModeParent: (bool: boolean) => void
+  setEntryCreationModeParent: (bool: boolean) => void;
+  retrieveLatestEntries: () => void; // Reloads the latest purchases component
 }
 
-export default function EntryCreation({ setEntryCreationModeParent }: EntryCreationProps) {
+export default function EntryCreation({ setEntryCreationModeParent, retrieveLatestEntries: loadLastEntries }: EntryCreationProps) {
   const keyboardHeight = useKeyboard();
 
   const [amount, setAmount] = useState("");
@@ -114,7 +115,8 @@ export default function EntryCreation({ setEntryCreationModeParent }: EntryCreat
     if (inputIsValid()) {
       let parsedAmount = parseInt(amount);
       const newEntry: IEntry = { amount: parsedAmount, title, category: "", date: date.toISOString() };
-      saveEntry(newEntry);
+      saveEntry(newEntry).then(() => loadLastEntries());
+
     } else {
       console.log("Check the input!");
     }
