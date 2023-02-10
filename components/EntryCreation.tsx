@@ -18,6 +18,8 @@ import DatePicker from "./DatePicker";
 import DatePickerButton from "./DatePickerButton";
 import CategorySelection from "./CategorySelection";
 import { saveEntry, saveObject } from "../services/Storage";
+import { Audio } from 'expo-av';
+import { SoundObject } from "expo-av/build/Audio";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -35,6 +37,7 @@ export default function EntryCreation({ setEntryCreationModeParent, retrieveLate
   const [amount, setAmount] = useState("");
   const [title, setTitle] = useState("");
   const [date, setDate] = useState(new Date());
+  const [sound, setSound] = useState<SoundObject>();
 
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showCategorySelection, setShowCategorySelection] = useState(false);
@@ -45,6 +48,8 @@ export default function EntryCreation({ setEntryCreationModeParent, retrieveLate
   const [overlayOpacityAnimation] = useState(new Animated.Value(0));
 
   useEffect(() => {
+    Audio.Sound.createAsync( require('../assets/confirm.mp3')).then((sound) => setSound(sound))
+
     Animated.timing(animation, {
       toValue: 1,
       duration: 250,
@@ -115,8 +120,9 @@ export default function EntryCreation({ setEntryCreationModeParent, retrieveLate
     if (inputIsValid()) {
       let parsedAmount = parseInt(amount);
       const newEntry: IEntry = { amount: parsedAmount, title, category: "", date: date.toISOString() };
+      
       saveEntry(newEntry).then(() => loadLastEntries());
-
+      sound?.sound.replayAsync();
     } else {
       console.log("Check the input!");
     }
