@@ -6,8 +6,11 @@ import { settings } from "../config";
 import { getEntries } from "../services/Storage";
 import {useState,useEffect} from "react"
 
+interface MonthOverViewProps {
+  refresh: boolean;
+}
 
-export default function MonthOverview() {
+export default function MonthOverview({refresh}: MonthOverViewProps) {
   const [moneySpent, setMoneySpent] = useState(0)
 
   const getMoneySpentForMonth = () => {
@@ -21,7 +24,6 @@ export default function MonthOverview() {
 
         if (getDifferenceInDays(entryDate, today) <= 30) {
           amount += entry.amount;
-          console.log(entryDate, entry.amount)
         } else {
           break; // no need to continue checking, since entries are ordered
         }
@@ -32,8 +34,9 @@ export default function MonthOverview() {
   }
 
   useEffect(() => {
+    console.log("REFRESHE")
     getMoneySpentForMonth()
-  }, [])
+  }, [refresh])
 
   return (
     <View style={styles.container}>

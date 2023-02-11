@@ -135,7 +135,10 @@ export default function EntryCreation({
         date: date.toISOString(),
       };
 
-      saveEntry(newEntry).then(() => loadLastEntries());
+      saveEntry(newEntry).then(() => {
+        loadLastEntries(); 
+      });
+
       confirmAdd();
     } else {
       console.log("Check the input!");

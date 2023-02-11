@@ -12,7 +12,9 @@ import { getLastEntries } from "./services/Storage";
 export default function App() {
   const [entryCreationMode, setEntryCreationMode] = useState(false);
   const [latestEntries, setLatestEntries] = useState<IEntry[]>([])
-  
+  const [refresh, setRefresh] = useState(false);  
+
+
   useEffect(() => {
     retrieveLatestEntries();
   }, [])
@@ -22,6 +24,7 @@ export default function App() {
   };
 
   const retrieveLatestEntries = () => {
+    setRefresh(!refresh)
     getLastEntries(6).then((entries: IEntry[]) => setLatestEntries(entries));
   }
 
@@ -29,7 +32,7 @@ export default function App() {
     <View style={styles.container}>
       <StatusBar style="light" />
       <Day />
-      <MonthOverview />
+      <MonthOverview refresh={refresh}/>
       <Menu />
       <LatestPurchases entries={latestEntries}/>
       <AddEntry setEntryCreationModeParent={setEntryCreationModeParent} />
