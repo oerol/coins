@@ -1,13 +1,40 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import Progress from "./Progress";
-import { amountToString } from "../utils";
+import { amountToString, getDifferenceInDays } from "../utils";
 import { settings } from "../config";
+import { getEntries } from "../services/Storage";
+import {useState,useEffect} from "react"
 
 
 export default function MonthOverview() {
+  const [moneySpent, setMoneySpent] = useState(0)
 
-  const moneySpent = 340.6;
+  const getMoneySpentForMonth = () => {
+    let amount = 0;
+    
+    const entries = getEntries().then((entries: IEntry[]) => {
+      for(let i = 0; i < entries.length; i++) {
+        const entry = entries[i];
+        const entryDate = new Date(entry.date)
+        const today = new Date();
+
+        if (getDifferenceInDays(entryDate, today) <= 30) {
+          amount += entry.amount;
+          console.log(entryDate, entry.amount)
+        } else {
+          break; // no need to continue checking, since entries are ordered
+        }
+      }
+      setMoneySpent(amount);
+    });
+
+  }
+
+  useEffect(() => {
+    getMoneySpentForMonth()
+  }, [])
+
   const currency = "€";
 
   return (

@@ -18,11 +18,20 @@ export function amountToString(amount: number): string {
   return leftSide + "," + rightSide;
 }
 
+export function getDifferenceInDays(date1: Date, date2: Date){
+  const dateTime1 = date1.getTime();
+  const dateTime2 = date2.getTime();
+  const differenceInDays = Math.floor((dateTime2 - dateTime1) / (1000 * 60 * 60 * 24));
+
+  return differenceInDays
+}
+
 // https://stackoverflow.com/questions/542938/how-to-calculate-number-of-days-between-two-dates
 export function dateStringToTimeAdverbial(dateString: string): string {
-  const date = new Date(dateString).getTime();
-  const today = new Date().getTime();
-  const differenceInDays = Math.floor((today - date) / (1000 * 60 * 60 * 24));
+  const date = new Date(dateString);
+  const today = new Date();
+  
+  const differenceInDays = getDifferenceInDays(date, today)
 
   if (differenceInDays === 0) {
     return 'today';
