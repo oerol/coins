@@ -6,26 +6,18 @@ import Menu from "./components/Menu";
 import LatestPurchases from "./components/LatestPurchases";
 import AddEntry from "./components/AddEntryButton";
 import EntryCreation from "./components/EntryCreation";
-import { useState, useEffect } from "react";
-import { getLastEntries } from "./services/Storage";
+import { useState} from "react";
 
 export default function App() {
   const [entryCreationMode, setEntryCreationMode] = useState(false);
-  const [latestEntries, setLatestEntries] = useState<IEntry[]>([])
   const [refresh, setRefresh] = useState(false);  
 
-
-  useEffect(() => {
-    retrieveLatestEntries();
-  }, [])
-  
   const setEntryCreationModeParent = (bool: boolean) => {
     setEntryCreationMode(bool);
   };
 
-  const retrieveLatestEntries = () => {
+  const refreshComponents = () => {
     setRefresh(!refresh)
-    getLastEntries(6).then((entries: IEntry[]) => setLatestEntries(entries));
   }
 
   return (
@@ -34,9 +26,9 @@ export default function App() {
       <Day />
       <MonthOverview refresh={refresh}/>
       <Menu />
-      <LatestPurchases entries={latestEntries}/>
+      <LatestPurchases refresh={refresh}/>
       <AddEntry setEntryCreationModeParent={setEntryCreationModeParent} />
-      {entryCreationMode && <EntryCreation setEntryCreationModeParent={setEntryCreationModeParent} retrieveLatestEntries={retrieveLatestEntries}/>}
+      {entryCreationMode && <EntryCreation setEntryCreationModeParent={setEntryCreationModeParent} refreshComponents={refreshComponents}/>}
     </View>
   );
 }

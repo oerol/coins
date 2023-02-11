@@ -29,12 +29,12 @@ const entryCreationHeight = 200;
 
 interface EntryCreationProps {
   setEntryCreationModeParent: (bool: boolean) => void;
-  retrieveLatestEntries: () => void; // Reloads the latest purchases component
+  refreshComponents: () => void; // Reloads the latest purchases component
 }
 
 export default function EntryCreation({
   setEntryCreationModeParent,
-  retrieveLatestEntries: loadLastEntries,
+  refreshComponents,
 }: EntryCreationProps) {
   const keyboardHeight = useKeyboard();
 
@@ -136,7 +136,7 @@ export default function EntryCreation({
       };
 
       saveEntry(newEntry).then(() => {
-        loadLastEntries(); 
+        refreshComponents(); 
       });
 
       confirmAdd();

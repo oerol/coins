@@ -1,13 +1,20 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import Entry from "./Entry";
+import { useState, useEffect } from "react";
+import { getLastEntries } from "../services/Storage";
 
 interface LatestPurchasesProps {
-  entries: IEntry[];
+  refresh: boolean;
 }
 
-export default function LatestPurchases({entries}: LatestPurchasesProps) {
+export default function LatestPurchases({ refresh }: LatestPurchasesProps) {
+  const [latestEntries, setLatestEntries] = useState<IEntry[]>([]);
 
-/*   
+  useEffect(() => {
+    getLastEntries(6).then((entries: IEntry[]) => setLatestEntries(entries));
+  }, [refresh]);
+
+  /*   
 const latestEntries: IEntry[]= [
     {title:"Nike Shoes", category:"Shoes", amount: 100, date:"today"},
     {title:"Atomic Habits", category:"Books", amount: 30, date:"yesterday"},
@@ -26,8 +33,16 @@ const latestEntries: IEntry[]= [
           <Text style={styles.buttonText}>See all</Text>
         </TouchableOpacity>
       </View>
-      {entries.map((entry, i) => {
-        return <Entry title={entry.title} category={entry.category} amount={entry.amount} date={entry.date} key={i} />
+      {latestEntries.map((entry, i) => {
+        return (
+          <Entry
+            title={entry.title}
+            category={entry.category}
+            amount={entry.amount}
+            date={entry.date}
+            key={i}
+          />
+        );
       })}
     </View>
   );
