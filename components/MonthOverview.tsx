@@ -35,8 +35,6 @@ export default function MonthOverview() {
     getMoneySpentForMonth()
   }, [])
 
-  const currency = "€";
-
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
