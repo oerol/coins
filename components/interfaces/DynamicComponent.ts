@@ -1,0 +1,3 @@
+interface DynamicComponent {
+    refresh: boolean;
+  }

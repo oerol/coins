@@ -6,11 +6,9 @@ import { settings } from "../config";
 import { getEntries } from "../services/Storage";
 import {useState,useEffect} from "react"
 
-interface MonthOverViewProps {
-  refresh: boolean;
-}
 
-export default function MonthOverview({refresh}: MonthOverViewProps) {
+
+export default function MonthOverview({refresh}: DynamicComponent) {
   const [moneySpent, setMoneySpent] = useState(0)
 
   const getMoneySpentForMonth = () => {

@@ -3,11 +3,7 @@ import Entry from "./Entry";
 import { useState, useEffect } from "react";
 import { getLastEntries } from "../services/Storage";
 
-interface LatestPurchasesProps {
-  refresh: boolean;
-}
-
-export default function LatestPurchases({ refresh }: LatestPurchasesProps) {
+export default function LatestPurchases({ refresh }: DynamicComponent) {
   const [latestEntries, setLatestEntries] = useState<IEntry[]>([]);
 
   useEffect(() => {
