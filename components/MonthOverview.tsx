@@ -13,7 +13,7 @@ export default function MonthOverview() {
   const getMoneySpentForMonth = () => {
     let amount = 0;
     
-    const entries = getEntries().then((entries: IEntry[]) => {
+    getEntries().then((entries: IEntry[]) => {
       for(let i = 0; i < entries.length; i++) {
         const entry = entries[i];
         const entryDate = new Date(entry.date)
