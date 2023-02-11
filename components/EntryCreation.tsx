@@ -18,8 +18,9 @@ import DatePicker from "./DatePicker";
 import DatePickerButton from "./DatePickerButton";
 import CategorySelection from "./CategorySelection";
 import { saveEntry, saveObject } from "../services/Storage";
-import { Audio } from 'expo-av';
+import { Audio } from "expo-av";
 import { SoundObject } from "expo-av/build/Audio";
+import * as Haptics from "expo-haptics";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -31,7 +32,10 @@ interface EntryCreationProps {
   retrieveLatestEntries: () => void; // Reloads the latest purchases component
 }
 
-export default function EntryCreation({ setEntryCreationModeParent, retrieveLatestEntries: loadLastEntries }: EntryCreationProps) {
+export default function EntryCreation({
+  setEntryCreationModeParent,
+  retrieveLatestEntries: loadLastEntries,
+}: EntryCreationProps) {
   const keyboardHeight = useKeyboard();
 
   const [amount, setAmount] = useState("");
@@ -48,7 +52,7 @@ export default function EntryCreation({ setEntryCreationModeParent, retrieveLate
   const [overlayOpacityAnimation] = useState(new Animated.Value(0));
 
   useEffect(() => {
-    Audio.Sound.createAsync( require('../assets/confirm.mp3')).then((sound) => setSound(sound))
+    Audio.Sound.createAsync(require("../assets/confirm.mp3")).then((sound) => setSound(sound));
 
     Animated.timing(animation, {
       toValue: 1,
@@ -116,13 +120,23 @@ export default function EntryCreation({ setEntryCreationModeParent, retrieveLate
     return true;
   };
 
+  const confirmAdd = () => {
+    sound?.sound.replayAsync();
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+  };
+
   const onAdd = (e: any) => {
     if (inputIsValid()) {
       let parsedAmount = parseInt(amount);
-      const newEntry: IEntry = { amount: parsedAmount, title, category: "", date: date.toISOString() };
-      
+      const newEntry: IEntry = {
+        amount: parsedAmount,
+        title,
+        category: "",
+        date: date.toISOString(),
+      };
+
       saveEntry(newEntry).then(() => loadLastEntries());
-      sound?.sound.replayAsync();
+      confirmAdd();
     } else {
       console.log("Check the input!");
     }
@@ -196,7 +210,7 @@ export default function EntryCreation({ setEntryCreationModeParent, retrieveLate
             </TouchableOpacity>
           </View>
 
-          {showDatePicker && <DatePicker date={date} setDateParent={setDateParent}/>}
+          {showDatePicker && <DatePicker date={date} setDateParent={setDateParent} />}
         </Animated.View>
       </Animated.View>
     </TouchableWithoutFeedback>
