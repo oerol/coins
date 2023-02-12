@@ -21,6 +21,7 @@ import { saveEntry, saveObject } from "../services/Storage";
 import { Audio } from "expo-av";
 import { SoundObject } from "expo-av/build/Audio";
 import * as Haptics from "expo-haptics";
+import { dateStringToTimeAdverbial, getDifferenceInDays } from "../utils";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -119,7 +120,6 @@ export default function EntryCreation({
 
     return true;
   };
-
   const confirmAdd = () => {
     sound?.sound.replayAsync();
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
@@ -144,6 +144,9 @@ export default function EntryCreation({
       console.log("Check the input!");
     }
   };
+  const getDatePickerText = () => {
+    return date.toLocaleDateString()
+  }
 
   return (
     <TouchableWithoutFeedback>
@@ -161,7 +164,7 @@ export default function EntryCreation({
             <TouchableOpacity style={styles.button} onPress={onCloseButtonPress}>
               <Image source={require("../assets/close.png")} resizeMode="contain" />
             </TouchableOpacity>
-            <DatePickerButton setShowDatePickerParent={setShowDatePickerParent} />
+            <DatePickerButton text={getDatePickerText()} setShowDatePickerParent={setShowDatePickerParent} />
           </View>
           <View style={{ marginTop: 20, flexDirection: "row" }}>
             {showCategorySelection && (

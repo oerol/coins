@@ -18,6 +18,7 @@ export function amountToString(amount: number): string {
   return leftSide + "," + rightSide;
 }
 
+// https://stackoverflow.com/questions/542938/how-to-calculate-number-of-days-between-two-dates
 export function getDifferenceInDays(date1: Date, date2: Date){
   const dateTime1 = date1.getTime();
   const dateTime2 = date2.getTime();
@@ -26,7 +27,6 @@ export function getDifferenceInDays(date1: Date, date2: Date){
   return differenceInDays
 }
 
-// https://stackoverflow.com/questions/542938/how-to-calculate-number-of-days-between-two-dates
 export function dateStringToTimeAdverbial(dateString: string): string {
   const date = new Date(dateString);
   const today = new Date();

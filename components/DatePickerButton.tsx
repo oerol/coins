@@ -2,9 +2,10 @@ import { Keyboard, StyleSheet, Text, TouchableOpacity, View } from "react-native
 
 interface DatePickerButtonProps {
   setShowDatePickerParent: (bool: boolean) => void
+  text: string;
 }
 
-export default function DatePickerButton({ setShowDatePickerParent }: DatePickerButtonProps) {
+export default function DatePickerButton({ setShowDatePickerParent, text }: DatePickerButtonProps) {
   const onPress = (e: any) => {
       Keyboard.dismiss()
     setShowDatePickerParent(true);
@@ -12,7 +13,7 @@ export default function DatePickerButton({ setShowDatePickerParent }: DatePicker
 
   return (
     <TouchableOpacity style={styles.container} onPress={(e) => onPress(e)}>
-      <Text style={styles.text}>Today</Text>
+      <Text style={styles.text}>{text}</Text>
     </TouchableOpacity>
   );
 }
