@@ -3,38 +3,36 @@ import { StyleSheet, Text, View } from "react-native";
 import Progress from "./Progress";
 import { amountToString, getDifferenceInDays } from "../utils";
 import { settings } from "../config";
-import { getEntries } from "../services/Storage";
-import {useState,useEffect} from "react"
+import { getEntries, removeEntries } from "../services/Storage";
+import { useState, useEffect } from "react";
 
-
-
-export default function MonthOverview({refresh}: DynamicComponent) {
-  const [moneySpent, setMoneySpent] = useState(0)
+export default function MonthOverview({ refresh }: DynamicComponent) {
+  const [moneySpent, setMoneySpent] = useState(0);
 
   const getMoneySpentForMonth = () => {
     let amount = 0;
-    
+    console.log("start");
     getEntries().then((entries: IEntry[]) => {
-      for(let i = 0; i < entries.length; i++) {
+      for (let i = 0; i < entries.length; i++) {
         const entry = entries[i];
-        const entryDate = new Date(entry.date)
+        const entryDate = new Date(entry.date);
         const today = new Date();
 
-        if (getDifferenceInDays(entryDate, today) <= 30) {
+        console.log(entry.amount);
+        const sameYear = entryDate.getMonth() === today.getMonth();
+        const sameMonth = entryDate.getFullYear() === today.getFullYear();
+
+        if (sameYear && sameMonth) {
           amount += entry.amount;
-        } else {
-          break; // no need to continue checking, since entries are ordered
         }
       }
       setMoneySpent(amount);
     });
-
-  }
+  };
 
   useEffect(() => {
-    console.log("REFRESHE")
-    getMoneySpentForMonth()
-  }, [refresh])
+    getMoneySpentForMonth();
+  }, [refresh]);
 
   return (
     <View style={styles.container}>
@@ -45,7 +43,7 @@ export default function MonthOverview({refresh}: DynamicComponent) {
           {settings.currency}
           {amountToString(moneySpent)}
         </Text>
-        <Progress/>
+        <Progress />
       </View>
     </View>
   );
